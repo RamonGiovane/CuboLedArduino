@@ -21,60 +21,57 @@ void setup(){
     }
   }
   
-  Serial.begin(9600);
+  Serial.begin(4800);
   
 }
    
 void loop(){
   
   //recebe um dado no formato acção;linha;coluna
-  //ações: L -> adiciona, F -> remove
+  //ações: l -> adiciona, f->remove
   //linha: valores-> 0, 1 ou 2
   //coluna: valores-> 0, 1, 2, 3, 4, 5, 6, 7 ou 8
-  //exemplo: L;2;2 L;2;6  F;2;2 
-  
+  //exemplo: l;2;2 l;2;6  f;2;2 
   lerSerial();
-
-  //percorre a matriz e acende os leds com valor = 1
-  for(int lin=0; lin<3; lin++){
-    for(int col=0; col<9; col++){
-      if(matriz[lin][col] == 1){
-        acendeLed(lin, col);
-        apagaLed(lin, col);
-      }
-    }
-  }
+  
+  //acende os leds ativos
+  acendeLedsAtivos();
+  
   
 }
+
 
 //lê o conteúdo da porta serial e encaminha para a ação correta
 void lerSerial(){
-   //verifica se existe dados para serem lidos
-   if(Serial.available()){
-      int tam = Serial.readBytes(str, strSize);
-      if(tam > 0){
-         //coloca o valor 1 para o led na matriz
-         if(str[0] == 'L'){
-         adicionaLed(str[2]-48,str[4]-48);
-         }
-         //coloca o valor 0 para o led na matriz
-         if(str[0] == 'F'){
-            removeLed(str[2]-48,str[4]-48);
-         }
-         
+  if(Serial.available()){
+    int tam = Serial.readBytes(str, strSize);
+    if(tam > 0){
+	  Serial.println(str);
+      //adiciona o valor 1 para o led na matriz
+      if(str[0] == 'L'){
+        adicionaLed(str[2]-48,str[4]-48);
       }
-   }
+      //adiciona o valor 0 para o led na matriz
+      if(str[0] == 'F'){
+        removeLed(str[2]-48,str[4]-48);
+      }
+    }
+  }
+
 }
 
-
-void acendeLed(int linha, int coluna){
-    digitalWrite(colunas[coluna], HIGH);
-    digitalWrite(linhas[linha], HIGH);
-}
-
-void apagaLed(int linha, int coluna){
-    digitalWrite(colunas[coluna], LOW);
-    digitalWrite(linhas[linha], LOW);
+//percorre a matriz e acende os leds com valor = 1
+void acendeLedsAtivos(){
+  for(int lin=0; lin<3; lin++){
+    digitalWrite(linhas[lin], HIGH);
+    for(int col=0; col<9; col++){
+      if(matriz[lin][col] == 1){
+        digitalWrite(colunas[col], HIGH);
+        digitalWrite(colunas[col], LOW);
+      }
+    }
+    digitalWrite(linhas[lin], LOW);
+  }
 }
 
 void adicionaLed(int linha, int coluna){
