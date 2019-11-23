@@ -28,10 +28,10 @@ void setup(){
 void loop(){
   
   //recebe um dado no formato acção;linha;coluna
-  //ações: l -> adiciona, f->remove
+  //ações: L -> adiciona, F -> remove
   //linha: valores-> 0,1 ou 2
   //coluna: valores-> 0.1.2.3.4.5.6.7 ou 8
-  //exemplo: l;2;2 l;2;6  f;2;2 
+  //exemplo: L;2;2 L;2;6  F;2;2 
   
   lerSerial();
 
