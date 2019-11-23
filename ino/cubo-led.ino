@@ -21,7 +21,7 @@ void setup(){
     }
   }
   
-  Serial.begin(4800);
+  Serial.begin(9600);
   
 }
    
