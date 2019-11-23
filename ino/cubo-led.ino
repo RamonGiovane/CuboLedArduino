@@ -52,12 +52,12 @@ void lerSerial(){
   int tam = Serial.readBytes(str, strSize);
   if(tam > 0){
     
-    //adiciona o valor 1 para o led na matriz
-    if(str[0] == 'l'){
+    //coloca o valor 1 para o led na matriz
+    if(str[0] == 'L'){
       adicionaLed(str[2]-48,str[4]-48);
     }
-    //adiciona o valor 0 para o led na matriz
-    if(str[0] == 'f'){
+    //coloca o valor 0 para o led na matriz
+    if(str[0] == 'F'){
       removeLed(str[2]-48,str[4]-48);
     }
   }
