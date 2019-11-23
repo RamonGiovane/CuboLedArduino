@@ -49,19 +49,21 @@ void loop(){
 
 //lê o conteúdo da porta serial e encaminha para a ação correta
 void lerSerial(){
-  int tam = Serial.readBytes(str, strSize);
-  if(tam > 0){
-    
-    //coloca o valor 1 para o led na matriz
-    if(str[0] == 'L'){
-      adicionaLed(str[2]-48,str[4]-48);
-    }
-    //coloca o valor 0 para o led na matriz
-    if(str[0] == 'F'){
-      removeLed(str[2]-48,str[4]-48);
-    }
-  }
-
+   //verifica se existe dados para serem lidos
+   if(Serial.available()){
+      int tam = Serial.readBytes(str, strSize);
+      if(tam > 0){
+         //coloca o valor 1 para o led na matriz
+         if(str[0] == 'L'){
+         adicionaLed(str[2]-48,str[4]-48);
+         }
+         //coloca o valor 0 para o led na matriz
+         if(str[0] == 'F'){
+            removeLed(str[2]-48,str[4]-48);
+         }
+         
+      }
+   }
 }
 
 
