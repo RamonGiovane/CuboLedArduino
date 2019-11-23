@@ -49,11 +49,11 @@ void lerSerial(){
 	  Serial.println(str);
       //adiciona o valor 1 para o led na matriz
       if(str[0] == 'L'){
-        adicionaLed(str[2]-48,str[4]-48);
+        matriz[str[2]-48][str[4]-48] = 1;
       }
       //adiciona o valor 0 para o led na matriz
       if(str[0] == 'F'){
-        removeLed(str[2]-48,str[4]-48);
+        matriz[str[2]-48][str[4]-48] = 0;
       }
     }
   }
@@ -74,28 +74,3 @@ void acendeLedsAtivos(){
   }
 }
 
-void adicionaLed(int linha, int coluna){
-  matriz[linha][coluna] = 1;
-  /*
-  Serial.print("Adicionou ");
-  Serial.print(linha);
-  Serial.print(" ");
-  Serial.print(coluna);
-  Serial.print(" = ");
-  Serial.print(matriz[linha][coluna]);
-  Serial.print("\n");
-  */
-}
-
-void removeLed(int linha, int coluna){
-  matriz[linha][coluna] = 0; 
-  /*
-  Serial.print("Removeu ");
-  Serial.print(linha);
-  Serial.print(" ");
-  Serial.print(coluna);
-  Serial.print(" = ");
-  Serial.print(matriz[linha][coluna]);
-  Serial.print("\n");
-  */
-}
