@@ -58,7 +58,7 @@ void lerSerial(){
     }
     //adiciona o valor 0 para o led na matriz
     if(str[0] == 'f'){
-      removeLed(str[2],str[4]-48);
+      removeLed(str[2]-48,str[4]-48);
     }
   }
 
