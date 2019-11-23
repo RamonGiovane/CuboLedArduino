@@ -27,7 +27,7 @@ void setup(){
    
 void loop(){
   
-  //recebe um dado no formato acção;linha;coluna
+  //recebe um dado no formato ação;linha;coluna
   //ações: l -> adiciona, f->remove
   //linha: valores-> 0, 1 ou 2
   //coluna: valores-> 0, 1, 2, 3, 4, 5, 6, 7 ou 8
@@ -37,31 +37,35 @@ void loop(){
   //acende os leds ativos
   acendeLedsAtivos();
   
-  
 }
 
 
 //lê o conteúdo da porta serial e encaminha para a ação correta
 void lerSerial(){
+  long msLeitura1 = millis(); //para medir o tempo
   if(Serial.available()){
     int tam = Serial.readBytes(str, strSize);
     if(tam > 0){
-	  Serial.println(str);
       //adiciona o valor 1 para o led na matriz
       if(str[0] == 'L'){
-        matriz[str[2]-48][str[4]-48] = 1;
+      matriz[str[2]-48][str[4]-48] = 1;
       }
       //adiciona o valor 0 para o led na matriz
       if(str[0] == 'F'){
-        matriz[str[2]-48][str[4]-48] = 0;
+      matriz[str[2]-48][str[4]-48] = 0;
       }
     }
+    long msLeitura2 = millis(); //para medir o tempo
+    Serial.print("Receber dados: ");
+    Serial.print(msLeitura2 - msLeitura1);
+    Serial.print("ms\n");
   }
 
 }
 
 //percorre a matriz e acende os leds com valor = 1
 void acendeLedsAtivos(){
+  long msMatriz1 = millis(); //para medir o tempo
   for(int lin=0; lin<3; lin++){
     digitalWrite(linhas[lin], HIGH);
     for(int col=0; col<9; col++){
@@ -72,5 +76,8 @@ void acendeLedsAtivos(){
     }
     digitalWrite(linhas[lin], LOW);
   }
+  long msMatriz2 = millis(); //para medir o tempo
+  Serial.print("Percorrer os leds: ");
+  Serial.print(msMatriz2 - msMatriz1);
+  Serial.print("ms\n");
 }
-
