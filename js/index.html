@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>CuboLed Blockly</title>
-
+    <link rel="stylesheet" src="style.css">
   </head>
-  <body>
+  <body style="margin-left: 20vw">
 
     <xml id="toolbox" style="display: none">
       <block type="controls_if"></block>
@@ -17,18 +17,24 @@
       <block type="light_on"></block>
       <block type="light_off"></block>
 
-
     </xml>
-    <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
-    <button onclick="execute()">EXECUTAR</button>
+    <div>
+      <div id="blocklyDiv" style="height: 480px; width: 600px;">
+       <p style="font-weight: lighter; font-family: sans-serif">Programe o Cubo Led!</p>
+      </div>
 
+
+      <div style="margin-top:80px">
+        <button onclick="execute()">EXECUTAR</button>
+      </div>
+    </div>
+   
     <script src="blockly_compressed.js"></script>
     <script src="blocks_compressed.js"></script>
     <script src="javascript_compressed.js"></script>
     <script src="en.js"></script>
     <script src="custom_blocks.js"></script>
     <script src="index.js"></script>
-
 
   </body>
 </html>
