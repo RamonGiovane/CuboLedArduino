@@ -23,8 +23,21 @@ Blockly.JavaScript['light_off'] = function(block) {
   return "";
 };
 
+Blockly.JavaScript['blink_light'] = function(block) {
+  var x = Blockly.JavaScript.valueToCode(block, 'X', Blockly.JavaScript.ORDER_FUNCTION_CALL) || '0';
+  var y = Blockly.JavaScript.valueToCode(block, 'Y', Blockly.JavaScript.ORDER_FUNCTION_CALL) || '0';
+  var z = Blockly.JavaScript.valueToCode(block, 'Z', Blockly.JavaScript.ORDER_FUNCTION_CALL) || '0';
+  var time = block.getFieldValue('time');
+  //if(time == null)time = '0';
+
+  //result.push(result += "acender " + argument0 + "," + argument1 + "," + argument2);
+  result.push(to_json("blink", x, y, z, time))
+  return "";
+};
+
 
 function execute(){
+  result = [];
   var code = Blockly.JavaScript.workspaceToCode(workspace);
   try {
     eval(code);
@@ -32,7 +45,7 @@ function execute(){
     alert(e);
   }
   console.log(result);
-  send(result)
+  //send(result)
 
 }
 
