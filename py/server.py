@@ -26,6 +26,7 @@ def listener():
     data = json.loads(request.data)
     ser = serial.Serial(driver, band)
 
+    print("SIZE OF data " + str(len(data)) )
     for command in data:
       execute(command)
     
@@ -39,7 +40,6 @@ def add_headers(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     
-    print(response.headers)
     return response
 
 
@@ -54,7 +54,7 @@ def execute(command):
     operation = command['operation']
 
     if operation == 'blink':
-        timer = command['time']
+        timer = int(command['time'])
     
     if operation == 'light' or operation == 'blink':
        send("L;%d;%d" % (x, y)) 
@@ -68,7 +68,8 @@ def execute(command):
 
 def send(command):
     print(command)
-    #ser.write(bytes(command, encoding="ascii"))
+    ser.write(bytes(command, encoding="ascii"))
+    
 def main():
     if(len(sys.argv) != 2):
         print("Parâmetro inválido.\nO parâmetro deve ser o nome da porta serial usada pelo Arduino.")
