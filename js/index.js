@@ -45,41 +45,34 @@ function execute(){
     alert(e);
   }
   console.log(result);
-  //send(result)
+
+  send(result)
+  //result.forEach((r) => send(r));
 
 }
 
 function to_json(operation, x, y, z, time=0){
-  j = new Object()
+  j = {}
   j.operation = operation
-  j.coordinate = coordinate_json(x, y, z);
+  j.coordinate = {x : x, y: y, z: z}
 
   if(operation == "blink")
     j.time = time
   
-    return JSON.stringify(j);
-}
-
-function coordinate_json(x, y, z){
-  return JSON.stringify({x : x, y: y, z: z})
-
+    return j;
 }
 
 
- function send(command){
-  let server_url = ""
-
-  fetch(server_url,{credentials:'same-origin',mode:'same-origin',
-            method:"post",body:JSON.stringify(command)})
-                .then(resp => {
-                  if(resp.status==200){
-                     return resp.json()
-                  }else{
-                      console.log("Status: "+resp.status);
-                      return Promise.reject("server")
-                  }
-                
-                })
-              }
+function send(command){
+  console.log(command)
+  console.log(JSON.stringify(command))
+  $.ajax({
+    url: 'http://127.0.0.1:7778/execute',
+    data: JSON.stringify(command),
+    contentType: 'application/json;charset=UTF-8',
+  	type: 'POST'
+    
+  }); 
+}
             
             
