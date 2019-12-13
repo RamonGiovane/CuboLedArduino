@@ -6,13 +6,13 @@ from flask import request
 from flask_cors import CORS, cross_origin
 import sys
 import time
+from threading import Thread
 
 import serial  # é necessário instalar o pyserial
 
 # caminho do driver arduino por exemplo '/dev/ttyACM0'
-driver = ''  #deixar em branco aqui. será recebido pelo console
+driver = '/dev/ttyACM0'  
 band = 9600
-
 
 
 app = Flask(__name__)
@@ -26,11 +26,11 @@ def listener():
     data = json.loads(request.data)
     ser = serial.Serial(driver, band)
 
-    print("SIZE OF data " + str(len(data)) )
+    print("SIZE OF data " + str(len(data)))
     for command in data:
-      execute(command)
+      execute(ser,command)
     
-    ser.close()
+    
     return "Sucesso."
 
 @app.after_request
@@ -44,43 +44,54 @@ def add_headers(response):
 
 
 
+def blinkThread(ser, y, x, timer):
+    print("THREAD")
+    send(ser, "L;%d;%d" % (y, x)) 
+    time.sleep(timer)
+    send(ser, "F;%d;%d" % (y, x)) 
+    print("Saiu")
+
 #Envia um comando recebido do blockly que pode ser 'blink' (piscar), 'light' (acender) ou 'fade' (apagar)
 #para o Arduino que recebe comandos para acender 'L;x;y' ou apagar 'F;x;y'
 #Quando solicitado piscar, a API utiliza o atributo time para acender, esperar os segundos definidos para o usuário, e etnão apagar
-def execute(command):
+def execute(ser, command):
     print("COMMAND: " + str(command))
-    x =  int(command['coordinate']['x']) + (3 * int(command['coordinate']['z']))
-    y = int(command['coordinate']['x'])
+    x = int(command['coordinate']['x']) + (3 * int(command['coordinate']['z']))
+    y = int(command['coordinate']['y'])
     operation = command['operation']
-
-    if operation == 'blink':
-        timer = int(command['time'])
-    
-    if operation == 'light' or operation == 'blink':
-       send("L;%d;%d" % (x, y)) 
-    
-    if operation == 'blink':
-       time.sleep(timer)
-
-    if operation == 'fade' or operation == 'blink':
-       send("F;%d;%d" % (x, y)) 
     
 
-def send(command):
-    print(command)
+    if operation == 'sleep':
+        time.sleep(int(command['time']))
+
+    elif operation == 'blink':
+        t = Thread(target=blinkThread, args=(ser, y, x, int(command['time'])))
+        t.start()
+    
+    elif operation == 'light':
+       send(ser, "L;%d;%d" % (y, x)) 
+
+    elif operation == 'fade' or operation == 'blink':
+       send(ser, "F;%d;%d" % (y, x)) 
+    
+
+def send(ser, command):
+    print("comandooo " +  str(command))
     ser.write(bytes(command, encoding="ascii"))
     
 def main():
     if(len(sys.argv) != 2):
         print("Parâmetro inválido.\nO parâmetro deve ser o nome da porta serial usada pelo Arduino.")
         return
-    driver = sys.argv[1] 
+    #driver = sys.argv[1] 
     app.run(port=7778, debug=True)
-
+    
+    if ser != None:
+        ser.close()
 if __name__ == "__main__":
     main()
 
-####### Exemplo de JSON enviado pelo blockly e recebido pelo JSON #######
+####### Exemplo de JSON enviado pelo blockly e recebido pela API #######
 # [
 #     { 
 #       operation: "blink",
@@ -95,5 +106,9 @@ if __name__ == "__main__":
 #       operation: "fade",
 #       coordinate: {x: 1, y: 2, z: 0},
 #      }
-#
+#      
+#     {
+#       operation: "sleep",
+#       time: 1
+#     }
 # ]
