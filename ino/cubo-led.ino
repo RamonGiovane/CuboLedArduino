@@ -1,3 +1,4 @@
+
 int colunas[] = {10, 9, 8, 7, 6, 5, 4, 3, 2};   
 int linhas[] = {13, 12, 11};
 
@@ -5,8 +6,10 @@ int matriz[3][9];
 
 int strSize = 5;
 char str[5];
-   
+
 void setup(){
+
+
   for (int contador = 0; contador < 9; contador++){
       pinMode(colunas[contador], OUTPUT);
   }
@@ -16,10 +19,11 @@ void setup(){
 
   //marca todos os leds como desligados
   for(int lin=0; lin<3; lin++){
-    for(int col=1; col<9; col++){
+    for(int col=0; col<9; col++){
       matriz[lin][col] = 0;
     }
   }
+  
   
   Serial.begin(9600);
   
@@ -45,10 +49,12 @@ void lerSerial(){
   long msLeitura1 = millis(); //para medir o tempo
   if(Serial.available()){
     int tam = Serial.readBytes(str, strSize);
+    
     if(tam > 0){
+      
       //adiciona o valor 1 para o led na matriz
       if(str[0] == 'L'){
-      matriz[str[2]-48][str[4]-48] = 1;
+        matriz[str[2]-48][str[4]-48] = 1;
       }
       //adiciona o valor 0 para o led na matriz
       if(str[0] == 'F'){
@@ -59,6 +65,8 @@ void lerSerial(){
     Serial.print("Receber dados: ");
     Serial.print(msLeitura2 - msLeitura1);
     Serial.print("ms\n");
+    Serial.print("Recebido");
+   
   }
 
 }
@@ -71,13 +79,16 @@ void acendeLedsAtivos(){
     for(int col=0; col<9; col++){
       if(matriz[lin][col] == 1){
         digitalWrite(colunas[col], HIGH);
+      }
+    }
+    delay(5);
+    for(int col=0; col<9; col++){
+      if(matriz[lin][col] == 1){
         digitalWrite(colunas[col], LOW);
       }
     }
     digitalWrite(linhas[lin], LOW);
   }
   long msMatriz2 = millis(); //para medir o tempo
-  Serial.print("Percorrer os leds: ");
-  Serial.print(msMatriz2 - msMatriz1);
-  Serial.print("ms\n");
+  
 }
