@@ -56,15 +56,20 @@ def blinkThread(ser, y, x, timer):
 #Quando solicitado piscar, a API utiliza o atributo time para acender, esperar os segundos definidos para o usuário, e etnão apagar
 def execute(ser, command):
     print("COMMAND: " + str(command))
-    x = int(command['coordinate']['x']) + (3 * int(command['coordinate']['z']))
-    y = int(command['coordinate']['y'])
+
     operation = command['operation']
     
 
     if operation == 'sleep':
         time.sleep(int(command['time']))
+        return
 
-    elif operation == 'blink':
+    
+    x = int(command['coordinate']['x']) + (3 * int(command['coordinate']['z']))
+    y = int(command['coordinate']['y'])
+
+
+    if operation == 'blink':
         t = Thread(target=blinkThread, args=(ser, y, x, int(command['time'])))
         t.start()
     
