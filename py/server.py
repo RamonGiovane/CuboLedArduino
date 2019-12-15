@@ -24,7 +24,7 @@ ser = None
 def listener():
 
     data = json.loads(request.data)
-    ser = serial.Serial(driver, band)
+    #ser = serial.Serial(driver, band)
 
     print("SIZE OF data " + str(len(data)))
     for command in data:
@@ -82,13 +82,9 @@ def execute(ser, command):
 
 def send(ser, command):
     print("comandooo " +  str(command))
-    ser.write(bytes(command, encoding="ascii"))
+    #ser.write(bytes(command, encoding="ascii"))
     
 def main():
-    if(len(sys.argv) != 2):
-        print("Parâmetro inválido.\nO parâmetro deve ser o nome da porta serial usada pelo Arduino.")
-        return
-    #driver = sys.argv[1] 
     app.run(port=7778, debug=True)
     
     if ser != None:
