@@ -50,11 +50,9 @@ Blockly.JavaScript['repeat'] = function(block) {
       let x = result[i];
 
           result.push(x);
-        }
-
-      
+        }  
     
-  times++;
+    times++;
 }
 
   return "";
@@ -68,11 +66,10 @@ Blockly.JavaScript['var'] = function(block) {
   return "";
 };
 
-Blockly.JavaScript['var_blink'] = function(block) {
-  let operation = block.getFieldValue('operation'); 
+Blockly.JavaScript['var_blink'] = function(block) { 
   let time = block.getFieldValue('time'); 
   
-  result.push(to_json('d' + to_operation(operation), var_x, var_y, var_z, time))
+  result.push(to_json('dblink', var_x, var_y, var_z, time == '' ? 0 : time))
   return "";
 };
 
