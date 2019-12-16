@@ -17,6 +17,10 @@ A arquitetura do projeto funciona de forma em que as aplicações de mais alto n
   - O arduino recebe comandos via porta serial e pode, apagar ou acender leds nas coordenadas (previamente convertidas pela API) X e Y.
   - O cubo foi construído utilizando o 27 leds azuis, uma protoboard, três transistores, resistores e fios de um kit Arduino Uno.
     
+    <p align="center">
+      <img src=https://github.com/RamonGiovane/CuboLedArduino/blob/master/cuboled.PNG" width="600"/>
+    </p>
+    
 ## Equipe  
  
  <ul>
