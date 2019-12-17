@@ -4,7 +4,7 @@ var workspace = Blockly.inject('blocklyDiv',
 let result = [];
 
 
-let var_x = 0, var_y = 0, var_z = 0;
+var var_x = 0, var_y = 0, var_z = 0;
 
 
 Blockly.JavaScript['light_on'] = function(block) {
@@ -119,6 +119,10 @@ function addOrSub(operation, plan){
     else if(plan == 'y') var_y += (var_y == 2) ? 0 : 1
     else if(plan == 'z') var_z += (var_z == 2) ? 0 : 1
   }
+
+  $("#elem_x").text(var_x);
+  $("#elem_y").text(var_y);
+  $("#elem_z").text(var_z);
 }
 
 function execute(){
@@ -134,6 +138,13 @@ function execute(){
 
   console.log(result);
   send(result)
+}
+
+function clean(){
+  var_x = var_y = var_z = 0;
+  $("#elem_x").text(var_x);
+  $("#elem_y").text(var_y);
+  $("#elem_z").text(var_z);
 }
 function interpret(result){
   for(let i = 0; i<result.length; i++){

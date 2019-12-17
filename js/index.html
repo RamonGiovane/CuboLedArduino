@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>CuboLed Blockly</title>
-    <link rel="stylesheet" src="style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/font-awesome.min.css">
   </head>
   <body style="margin-left: 20vw">
@@ -24,10 +24,26 @@
     </xml>
     <div>
       <div style="width: 100%; max-width: 60%;  border: 1px solid #babaca">
+
           <p style="font-weight: lighter; font-family: sans-serif; float: left; margin-left: 13px;">Programe o Cubo Led!</p>
+          <p style="font-weight: lighter; font-family: sans-serif; float: left; margin-left: 13px;">
+            <span class="elem"> X:
+              <span id="elem_x">0</span> 
+            </span>
+            <span class="elem"> Y: 
+              <span   id="elem_y">0</span>
+            </span> 
+            <span class="elem"> Z:
+              <span  id="elem_z">0</span>
+            </span>
+          </p>
           <button style="font-weight: lighter; font-family: sans-serif; float: right; margin: 12px; padding: 6px 10px; font-size: 13px;" 
           onclick="execute()"> <img style="width: 13px;" alt="Play" src="play-solid.svg"></img> </button>
           
+          <button style="font-weight: lighter; font-family: sans-serif; float: right; margin: 12px; padding: 6px 10px; font-size: 13px;" 
+          onclick="clean()"> <img style="width: 13px;" alt="Play" src="trash-solid.svg"></img> </button>
+          
+
           <div id="blocklyDiv" style="height: 90vh; width: 100%; ; clear: both;"></div>
       </div>
 
