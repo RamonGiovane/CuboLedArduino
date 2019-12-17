@@ -24,9 +24,10 @@ ser = None
 def listener():
 
     data = json.loads(request.data)
-    #ser = serial.Serial(driver, band)
+    ser = serial.Serial(driver, band)
 
     print("SIZE OF data " + str(len(data)))
+    time.sleep(1)
     for command in data:
       execute(ser,command)
     
@@ -61,7 +62,7 @@ def execute(ser, command):
     
 
     if operation == 'sleep':
-        time.sleep(int(command['time']))
+        time.sleep(float(command['time']))
         return
 
     
@@ -70,7 +71,7 @@ def execute(ser, command):
 
 
     if operation == 'blink':
-        t = Thread(target=blinkThread, args=(ser, y, x, int(command['time'])))
+        t = Thread(target=blinkThread, args=(ser, y, x, float(command['time'])))
         t.start()
     
     elif operation == 'light':
@@ -82,7 +83,7 @@ def execute(ser, command):
 
 def send(ser, command):
     print("comandooo " +  str(command))
-    #ser.write(bytes(command, encoding="ascii"))
+    ser.write(bytes(command, encoding="ascii"))
     
 def main():
     app.run(port=7778, debug=True)
