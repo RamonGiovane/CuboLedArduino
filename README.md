@@ -14,7 +14,7 @@ na disciplina  de <b>Web Services</b> ministrada pelo professor <a href="https:/
 ## Detalhes do Projeto
 A arquitetura do projeto funciona de forma em que as aplicações de mais alto nível realizam operações mais complexas, enquanto as mais  baixas, mais simples.
   - Uma página WEB controla o cubo com blocos como acender, apagar, piscar um determinada coordenada (X, Y, Z) ou através de variáveis,       além de loops e operações de somas e subtrações. 
-  - Uma API Restful em Python usando Flask recebe comandos do Blockly via HTTP POST, com operações que pode ser: esperar, acender, apagar,     piscar.
+  - Uma API Restful em Python usando Flask <a href="https://app.swaggerhub.com/apis-docs/hugo-bianchetti/CuboLed/1.0.0">(ver documentação) </a> recebe comandos do Blockly via HTTP POST, com operações que pode ser: esperar, acender, apagar,     piscar.
   - O arduino recebe comandos via porta serial e pode, apagar ou acender leds nas coordenadas (previamente convertidas pela API) X e Y.
   - O cubo foi construído utilizando o 27 leds azuis, uma protoboard, três transistores, resistores e fios de um kit Arduino Uno.
     
